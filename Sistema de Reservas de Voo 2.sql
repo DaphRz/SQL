@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS Voos(
 id_voo INT,
 assento VARCHAR(45),
 PRIMARY KEY (id_voo, assento),
+aero_partida INT NOT NULL,
 data_partida DATE NOT NULL,
 hora_partida TIME NOT NULL,
 aero_chegada VARCHAR(4) NOT NULL,
@@ -49,7 +50,9 @@ data_chegada DATE NOT NULL,
 hora_chegada TIME NOT NULL,
 cod_aeronave INT NOT NULL,
 id_cia INT NOT NULL,
-CONSTRAINT aero_voo FOREIGN KEY (cod_aeronave) REFERENCES Aeronave(cod_aeronave),
+CONSTRAINT aero_partida FOREIGN KEY (aero_partida) REFERENCES Aeroportos(id_aeroporto),
+CONSTRAINT aero_chegada FOREIGN KEY (aero_chegada) REFERENCES Aeroportos(id_aeroporto),
+CONSTRAINT aeronave_voo FOREIGN KEY (cod_aeronave) REFERENCES Aeronave(cod_aeronave),
 CONSTRAINT cia_voo FOREIGN KEY (id_cia) REFERENCES Cias_Aereas(id_cia));
 
 CREATE TABLE IF NOT EXISTS Passageiros_Reservas(
@@ -59,15 +62,11 @@ CONSTRAINT pass_reserva FOREIGN KEY (cod_passageiro) REFERENCES Passageiros(cod_
 CONSTRAINT reserva_pass FOREIGN KEY (cod_reserva) REFERENCES Reservas_de_Voo(cod_reserva));
 
 CREATE TABLE IF NOT EXISTS Voos_Reservas(
-id_voo INT NOT NULL,
-cod_aeronave INT NOT NULL,
-id_cia INT NOT NULL,
-assento VARCHAR(45) NOT NULL,
-cod_reserva INT NOT NULL,
-CONSTRAINT voo_voo FOREIGN KEY (id_voo) REFERENCES Voos(id_voo),
-CONSTRAINT aero_voo FOREIGN KEY (cod_aeronave) REFERENCES Aeronave(cod_aeronave),
-CONSTRAINT cia_reserva FOREIGN KEY (id_cia) REFERENCES Cias_Aereas(id_cia),
-CONSTRAINT assentos_voo FOREIGN KEY (assento) REFERENCES Voos(assento),
+id_voo INT,
+assento VARCHAR(45),
+cod_reserva INT,
+PRIMARY KEY(id_voo, assento, cod_reserva),
+CONSTRAINT voo_voo_assento FOREIGN KEY (id_voo, assento) REFERENCES Voos(id_voo, assento),
 CONSTRAINT reserva_voo FOREIGN KEY (cod_reserva) REFERENCES Reservas_de_Voo(cod_reserva));
 
 ALTER TABLE Cias_Aereas
