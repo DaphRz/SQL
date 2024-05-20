@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS Passagens_Aereas;
-USE Passagens_Aereas;
+CREATE DATABASE IF NOT EXISTS dp_Passagens_Aereas;
+USE dp_Passagens_Aereas;
 
 CREATE TABLE IF NOT EXISTS Passageiros(
 cod_passageiro VARCHAR(15) PRIMARY KEY,
@@ -45,7 +45,7 @@ PRIMARY KEY (id_voo, assento),
 aero_partida INT NOT NULL,
 data_partida DATE NOT NULL,
 hora_partida TIME NOT NULL,
-aero_chegada VARCHAR(4) NOT NULL,
+aero_chegada INT NOT NULL,
 data_chegada DATE NOT NULL,
 hora_chegada TIME NOT NULL,
 cod_aeronave INT NOT NULL,
@@ -56,8 +56,9 @@ CONSTRAINT aeronave_voo FOREIGN KEY (cod_aeronave) REFERENCES Aeronave(cod_aeron
 CONSTRAINT cia_voo FOREIGN KEY (id_cia) REFERENCES Cias_Aereas(id_cia));
 
 CREATE TABLE IF NOT EXISTS Passageiros_Reservas(
-cod_passageiro VARCHAR(15) NOT NULL,
-cod_reserva INT NOT NULL,
+cod_passageiro VARCHAR(15),
+cod_reserva INT,
+PRIMARY KEY (cod_passageiro,cod_reserva),
 CONSTRAINT pass_reserva FOREIGN KEY (cod_passageiro) REFERENCES Passageiros(cod_passageiro),
 CONSTRAINT reserva_pass FOREIGN KEY (cod_reserva) REFERENCES Reservas_de_Voo(cod_reserva));
 
