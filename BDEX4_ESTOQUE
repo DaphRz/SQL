@@ -1,0 +1,60 @@
+#Usando a base de dados BDEX4_ESTOQUE, responda:
+USE BDEX4_ESTOQUE;
+
+#1. Exibir todas as informações da tabela `PRODUTOS`.
+SELECT *
+FROM PRODUTOS;
+
+#2. Mostrar os nomes e preços dos produtos que custam mais de 50,00.
+SELECT NOME_PRO AS NOME, PRECO AS PREÇO
+FROM PRODUTOS
+WHERE PRECO > 50;
+
+#3. Listar os nomes e cidades dos fornecedores.
+SELECT NOME_FOR AS NOME, CIDADE
+FROM FORNECEDORES;
+
+#4. Exibir os detalhes dos pedidos de compra: ID do pedido, data, hora e nome do fornecedor.
+SELECT P.ID_PEDIDO, P.DATA_PEDIDO, P.HORA_PEDIDO, F.NOME_FOR AS NOME
+FROM PEDIDOS_COMPRA P
+JOIN FORNECEDORES F
+ON P.FORNECEDOR = F.ID_FORNECEDOR;
+
+#5. Listar o nome dos produtos e a quantidade disponível em cada armazém.
+SELECT P.NOME_PRO AS NOME, PA.QUANTIDADE, A.NOME_ARMAZEM AS ARMAZEM
+FROM PRODUTOS_ARMAZENS PA
+JOIN PRODUTOS P
+ON PA.PRODUTO = P.ID_PRODUTO
+JOIN ARMAZENS A
+ON PA.ARMAZEM = A.ID_ARMAZEM;
+
+#6. Mostrar os nomes dos fornecedores que têm produtos no armazém de "São Paulo".
+SELECT DISTINCT F.NOME_FOR AS NOME, P.NOME_PRO AS PRODUTO, PA.ARMAZEM
+FROM PRODUTOS_FORNECEDORES PF
+JOIN FORNECEDORES F
+ON PF.FORNECEDOR = F.ID_FORNECEDOR
+JOIN PRODUTOS P
+ON PF.PRODUTO = P.ID_PRODUTO
+JOIN PRODUTOS_ARMAZENS PA 
+ON P.ID_PRODUTO = PA.PRODUTO
+JOIN ARMAZENS A
+ON PA.ARMAZEM = A.ID_ARMAZEM
+WHERE CIDADE_ARMAZEM LIKE "São Paulo"
+
+#7. Listar todos os armazéns, ordenados pelo nome do armazém de A a Z.
+
+#8. Mostrar os nomes dos produtos que têm a palavra "Premium" na descrição.
+
+#9. Exibir os detalhes dos produtos: ID do produto, nome, descrição, preço e nome dos fornecedores.
+
+#10. Para cada pedido de compra, mostrar o ID do pedido e a quantidade total de produtos solicitados.
+
+#11. Contar quantos produtos cada fornecedor oferece.
+
+#12. Listar os nomes dos produtos e a quantidade disponível no armazém "Rio de Janeiro".
+
+#13. Mostrar o nome dos fornecedores e a data e hora do último pedido de compra que eles receberam.
+
+#14. Contar quantos pedidos de compra cada fornecedor recebeu.
+
+#15. Para cada armazém, exibir o nome do armazém e a quantidade total de produtos armazenados nele.
