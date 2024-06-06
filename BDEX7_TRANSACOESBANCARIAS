@@ -1,0 +1,95 @@
+use BDEX7_TRANSACOESBANCARIAS;
+
+#1. Criar uma consulta para exibir todas as informações da tabela USUARIOS.
+SELECT *
+FROM USUARIOS;
+
+#2. Escrever uma consulta para mostrar os nomes e CPFs dos usuários que possuem telefone cadastrado.
+SELECT NOME_USER AS NOME, CPF_USER AS CPF
+FROM USUARIOS
+WHERE TELEFONE IS NOT NULL;
+-- OR TELEFONE <> ' '; (DIFERENTE DE VAZIO)
+
+#3. Listar os nomes dos bancos e suas respectivas agências.
+SELECT NOME_BNC AS BANCO, AGENCIA
+FROM CONTAS;
+
+#4. Exibir os detalhes das transações: ID da transação, valor, natureza (crédito ou débito), nome do usuário.
+SELECT T.ID_TRANS, T.VALOR, T.NATUREZA, U.NOME_USER AS USUARIO
+FROM TRANSACOES T
+JOIN USUARIOS U  ON U.ID_USER = T.USUARIO;
+
+#5. Listar os nomes dos usuários e seus e-mails, ordenados pelo nome do usuário de forma alfabética.
+SELECT NOME_USER AS NOME, EMAIL
+FROM USUARIOS
+ORDER BY NOME ASC;
+
+#6. Mostrar as informações das contas bancárias que possuem saldo superior a 1000 reais.
+SELECT C.*, S.VALOR_SALDO
+FROM CONTAS C
+JOIN SALDOS S ON C.AGENCIA = S.AGENCIA
+AND C.CONTA = S.CONTA
+AND C.COD_BANCO = S.COD_BANCO
+WHERE S.VALOR_SALDO > 1000;
+
+#7. Listar os nomes dos usuários que realizaram transações com valor superior a 500 reais.
+SELECT DISTINCT NOME_USER AS NOME
+FROM USUARIOS U
+JOIN TRANSACOES T 
+ON T.USUARIO = U.ID_USER
+WHERE T.VALOR > 500;
+
+#8. Exibir os detalhes das transações que foram realizadas em contas do banco "Banco Central".
+-- SELECT T.*
+-- FROM TRANSACOES T
+-- JOIN CONTAS C ON T.
+
+
+#9. Mostrar os nomes dos usuários e seus respectivos telefones cadastrados, ordenados pelo nome do usuário de forma decrescente.
+
+#10. Listar os nomes dos bancos e o total de contas cadastradas em cada um deles.
+SELECT 
+	NOME_BNC AS BANCO, 
+	COUNT(CONTA) AS TOTAL_DE_CONTAS
+FROM CONTAS
+GROUP BY BANCO;
+
+#11. Para cada usuário, mostrar o nome do usuário e o saldo atual de sua conta bancária.
+SELECT 
+	U.NOME_USER AS NOME, 
+    S.VALOR_SALDO
+FROM 
+	USUARIOS U
+JOIN
+	CONTAS C ON C.CONTA = U.ID_USER
+JOIN 
+	SALDOS S ON S.AGENCIA = C.AGENCIA
+    AND S.CONTA = C.CONTA
+    AND S.COD_BANCO = C.COD_BANCO;
+
+#12. Contar quantas transações de crédito foram realizadas.
+SELECT COUNT(*) AS TRANSACOES
+FROM TRANSACOES
+WHERE NATUREZA = 'CRÉDITO';
+
+#13. Listar os nomes dos usuários que realizaram transações bancárias no último mês.
+SELECT DISTINCT NOME_USER AS NOME
+FROM USUARIOS U
+JOIN 
+	TRANSACOES T ON T.USUARIO = U.ID_USER
+JOIN 
+	CONTAS C ON C.USUARIO = T.USUARIO
+JOIN 
+	SALDOS S ON S.AGENCIA = C.AGENCIA
+    AND S.CONTA = C.CONTA
+    AND S.COD_BANCO = C.COD_BANCO
+WHERE DATA_SALDO = '2024-05-  '
+GROUP BY NOME;
+
+
+-- SELECT *
+-- FROM SALDOS;
+
+#14. Exibir os detalhes das transações que foram realizadas em contas com saldo negativo.
+
+#15. Mostrar o valor total de transações de débito realizadas no último dia útil.
