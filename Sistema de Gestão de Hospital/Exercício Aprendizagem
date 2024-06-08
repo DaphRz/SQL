@@ -1,0 +1,22 @@
+# Exercícios Aprendizagem - BDEX1_HOSPITAL:
+
+USE Hospital_1;
+
+-- 1. Quais são os nomes e datas de nascimento de todos os pacientes cadastrados? 
+DESC Pacientes;
+
+SELECT nome as NOME, data_nasc as DATA_NASC
+FROM Pacientes;
+
+-- 2. Qual é o número total de médicos cadastrados? 
+DESC Medicos;
+
+SELECT COUNT(CRM)
+FROM Medicos;
+
+SELECT COUNT(*) AS Qtd_Medicos
+FROM Medicos;
+
+-- 3. Qual é a idade média dos pacientes cadastrados?
+SELECT ROUND(AVG(TIMESTAMPDIFF(YEAR,data_nasc,CURDATE())),0) AS Idade_Média
+FROM Pacientes;
