@@ -16,3 +16,8 @@ FROM Voos
 GROUP BY id_cia;
 
 -- 3. Qual é a capacidade média das aeronaves cadastradas?
+SHOW TABLES FROM Passagens_Aereas_2;
+DESC Aeronave;
+
+SELECT ROUND(AVG(quantidade_assentos),1) AS Capacidade_Média
+FROM Aeronave;
